@@ -13,9 +13,9 @@ class CustomerController extends Controller
     {
         $url = url('customer');
         $title = 'Customer Registration';
-        $customer = null; // Initialize $customer variable
+        $customer = new Customers(); // Initialize a new instance of the Customers model
         $data = compact('url', 'title', 'customer'); // Pass $customer to compact
-        return view('customer')->with($data);
+        return view('form')->with($data);
     }
 
     public function store(Request $request){
@@ -26,7 +26,7 @@ class CustomerController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:customers',
-            'password' => 'required|string|min:5', // 'confirmed' rule ensures password_confirmation matches password
+            'password' => 'required|string|min:5|confirmed', // 'confirmed' rule ensures password_confirmation matches password
         ]);
         
 
@@ -65,23 +65,27 @@ class CustomerController extends Controller
     public function edit($id){
         $customer = Customers::find($id);
         if(is_null($customer)){
-            return redirect('/customer/view');
-        }else{
+            return redirect('/customer/view')->with('error', 'Customer not found.');
+        } else {
             $title = "Update Customer";
             $url = url('/customer/update') . "/" . $id;
-            $data = compact('customer','url','title');
-            return view('customer')->with($data);
+            $data = compact('customer', 'url', 'title');
+            return view('form')->with($data);
         }
     }
+    
 
     public function update($id , Request $request){
         $customer = Customers::find($id);
-        $customer-> email = $request['email'];
-        $customer-> name = $request['name'];
+        if(is_null($customer)){
+            return redirect('/customer/view')->with('error', 'Customer not found.');
+        }
+        $customer->email = $request->input('email');
+        $customer->name = $request->input('name');
         $customer->save();
         session()->flash('success', 'Customer details updated successfully!');
 
-        // Redirect back to the form
-        return redirect('/customer/create');
+        return redirect('/customer/view');
     }
+
 }

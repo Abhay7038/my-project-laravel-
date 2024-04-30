@@ -59,6 +59,7 @@
       }
       form {
       margin: 0 30px;
+      width: 280px;
       }
       .account-type, .gender {
       margin: 15px 0;
@@ -149,35 +150,37 @@
   <body>
     <nav class="nav justify-content-center">
       <a class="nav-link active" href="{{url('/')}}" aria-current="page">Home</a>
-      <a class="nav-link" href="{{url('/register')}}">Form</a>
+      <a class="nav-link" href="{{url('/customer/create')}}">Form</a>
       <a class="nav-link" href="{{url('/customer/view')}}">Table</a>
     </nav>
     <div class="main-block">
       <h1>Registration</h1>
-      <form action="{{url('/')}}/register" method="post">
+      <form action="{{ $url }}" method="post">
         @csrf
         <label id="icon" for="email"><i class="fas fa-envelope"></i></label>
-        <input type="text" name="email" id="email" placeholder="Email" value="{{old('email')}}" ><br>
+        <input type="text" name="email" id="email" placeholder="Email" value="{{$customer->email}}" ><br>
         <span class="text-danger">
           @error('email')
             {{$message}}
           @enderror
         </span><br>
         <label id="icon" for="name"><i class="fas fa-user"></i></label>
-        <input type="text" name="name" id="name" placeholder="Name" value="{{old('name')}}" >
+        <input type="text" name="name" id="name" placeholder="Name" value="{{$customer->name}}" >
         <span class="text-danger">
           @error('name')
             {{$message}}
           @enderror
         </span><br><br>
         <label id="icon" for="password"><i class="fas fa-unlock-alt"></i></label>
-        <input type="password" name="password" placeholder="Password">
+        <input type="password" name="password" placeholder="Password" value="{{$customer->password}}">
         <span class="text-danger">
           @error('password')
             {{$message}}
           @enderror
-        </span>
-      </span><br>
+        </span><br>
+        <label id="icon" for="password_confirmation"><i class="fas fa-unlock-alt"></i></label>
+        <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Password confirmationnn">
+        
         <div class="btn-block">
           <button type="submit" href="/">Submit</button>
         </div>
