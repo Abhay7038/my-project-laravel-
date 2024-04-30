@@ -26,7 +26,7 @@ class CustomerController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:customers',
-            'password' => 'required|string|min:5|confirmed', // 'confirmed' rule ensures password_confirmation matches password
+            'password' => 'required|string|min:5', // 'confirmed' rule ensures password_confirmation matches password
         ]);
         
 
