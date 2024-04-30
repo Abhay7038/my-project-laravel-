@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customers;
+use Illuminate\Support\Facades\Validator; // Add this line
 
 class CustomerController extends Controller
 {
@@ -22,6 +23,18 @@ class CustomerController extends Controller
         // echo "<pre>";
         // print_r($request->all());
 
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:customers',
+            'password' => 'required|string|min:5|confirmed', // 'confirmed' rule ensures password_confirmation matches password
+        ]);
+        
+
+        // If validation fails, redirect back with errors
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $customer = new Customers;
         $customer-> email = $request['email'];
         $customer-> name = $request['name'];
@@ -31,7 +44,7 @@ class CustomerController extends Controller
         session()->flash('success', 'Customer registered successfully!');
 
         //echo "hooo";
-        return redirect('/customer/create');
+        return redirect('/customer/view');
     }
 
     public function view(){

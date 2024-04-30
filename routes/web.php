@@ -28,4 +28,4 @@ Route::get('/customer/view',[CustomerController::class,'view']);
 Route::get('/customer/delete/{id}',[CustomerController::class,'delete']);
 Route::get('/customer/edit/{id}',[CustomerController::class,'edit']);
 Route::post('/customer/update/{id}',[CustomerController::class,'update']);
-Route::post('/customer',[CustomerController::class,'store']);
+Route::match(['get', 'post'], '/customer', [CustomerController::class, 'store']);

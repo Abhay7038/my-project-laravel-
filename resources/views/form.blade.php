@@ -6,6 +6,21 @@
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+      .nav {
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #fff; /* Optional: Set background color for the navigation bar */
+        z-index: 1000; /* Ensure navigation bar is above other elements */
+      }
+
+      .main-block {
+        margin-top: 50px; /* Adjust margin-top to push content below the navigation bar */
+        /* Existing styles */
+      }
+
       html, body {
       display: flex;
       justify-content: center;
@@ -156,20 +171,13 @@
           @enderror
         </span><br><br>
         <label id="icon" for="password"><i class="fas fa-unlock-alt"></i></label>
-        <input type="password" name="password" id="password" placeholder="Password" >
+        <input type="password" name="password" placeholder="Password">
         <span class="text-danger">
           @error('password')
             {{$message}}
           @enderror
         </span>
       </span><br>
-      <label id="icon" for="password_confir"><i class="fas fa-unlock-alt"></i></label>
-      <input type="password" name="password_confir" id="password_confir" placeholder="Password confirmation" >
-      <span class="text-danger">
-        @error('password_confir')
-          {{$message}}
-        @enderror
-      </span>
         <div class="btn-block">
           <button type="submit" href="/">Submit</button>
         </div>
